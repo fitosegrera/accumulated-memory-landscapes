@@ -12,13 +12,14 @@ Accumulated-Memory-Landscapes is Inspired by Jim Campbell's “Accumulated Psych
 
 ###Dependencies
 
-1.Requirements on the server side:
+1. Requirements on the server side:
 
 a) ImageMagick NEEDS to be installed on the server [INSTALLATION](https://help.ubuntu.com/community/ImageMagick)
 
 b) NodeJs and Npm [INSTALLATION](https://nodejs.org/en/)
 
 c) Google-Chrome or Firefox
+
 
 2. Processing 3.0 and processing-android mode [PROCESSING](https://processing.org/) Please foolow intructions to install Android Developer Tools at [Android Mode](https://github.com/processing/processing-android/wiki)
 
