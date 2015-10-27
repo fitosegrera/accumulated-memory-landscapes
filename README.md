@@ -50,3 +50,25 @@ __2. Mobile App:__
 
   c) If all is right; you should see your phone's name under the processing menu>android>device. If so run your App and it should appear a blanck screen on your phone after a few seconds. This means everything worked well!
 
+###Running the whole thing
+
+1. On your server cd into the accumulated-memory-landscapes/server and run it:
+	cd /YOUR/PATH/accumulated-memory-landscapes/server
+	node server.js
+
+__Note:__ If you want persistence and chrash-proof you should install forever on your server [FOREVERJS](https://github.com/foreverjs/forever). Also make sure your server (if it is a remote one) has domains and ports available for public access.
+
+2. Power your brain scanner (thinkgear) and pair it with your phone via bluetooth.
+
+3. On your laptop: connect your phone, open the processing sketch located at phoneApp/AML and compile it from the processing IDE. You should now have the app running on your phone.
+
+4. Finally, open a web browser like chrome or firefox and go to your server url on port 3000. For example if you are running the server locally:
+
+	http://localhost:3000
+
+If you are running it remotely you should use your Global IP address or domain name (in case you have one):
+
+	43.565.763.23:3000
+	http://my.domain.com:3000
+
+You should now see the landscape rendered on your browser based on your brain data and captured imagery and sound.
