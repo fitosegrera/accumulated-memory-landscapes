@@ -9,9 +9,6 @@ app.use('/', express.static(__dirname + '/public'));
 ///////////////
 //Image Stuff//
 ///////////////
-/*
-NOTE: ImageMagick NEEDS to be installed on the server
-*/
 
 //Merge each new saved image int he server's folder with composed.png
 
