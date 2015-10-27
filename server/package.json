@@ -1,0 +1,25 @@
+{
+  "name": "accumulated_memory_landscapes",
+  "version": "0.0.0",
+  "description": "terrain generation using brainwave data and webgl",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "generative",
+    "terrain",
+    "landscape",
+    "memory",
+    "brainwaves",
+    "EEG",
+    "procedural",
+    "threejs",
+    "webgl"
+  ],
+  "author": "fito_segrera",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
