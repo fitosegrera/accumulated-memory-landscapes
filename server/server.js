@@ -18,7 +18,7 @@ NOTE: ImageMagick NEEDS to be installed on the server
 function merge() {
     fs.exists('public/textures/users/imgs/testUser_1/composed.png', function(exists) {
         if (!exists) {
-            exec("convert -size 2048x2048 xc:white public/textures/users/imgs/testUser_1/composed.png", function(err, stdout, stderr) {
+            exec("convert -size 2048x2048 xc:white public/textures/users/testUser_1/imgs/composed.png", function(err, stdout, stderr) {
                 if (err) {
                     console.log(err);
                 }
@@ -27,7 +27,7 @@ function merge() {
         fs.watch('public/textures/users/imgs/testUser_1', function(event, filename) {
             if (event == 'change' && filename != 'composed.png') {
                 console.log(filename);
-                var command = "convert -resize 2048x2048 public/textures/users/imgs/testUser_1/" + filename + " public/textures/users/imgs/testUser_1/composed.png -compose multiply -composite -contrast-stretch 0.1% -colorspace Gray public/textures/users/imgs/testUser_1/composed.png";
+                var command = "convert -resize 2048x2048 public/textures/users/testUser_1/" + filename + " public/textures/users/testUser_1/imgs/composed.png -compose multiply -composite -contrast-stretch 0.1% -colorspace Gray public/textures/users/testUser_1/imgs/composed.png";
                 exec(command, function(err, stdout, stderr) {
                     if (err) {
                         console.log(err);

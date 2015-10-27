@@ -214,7 +214,7 @@ function initSky(sky_path) {
 function initTerrain() {
 
     terrainGeom = new THREE.TerrainGeometry();
-    terrainGeom.createGeometry("textures/users/imgs/testUser_1/composed.png", startAnimating);
+    terrainGeom.createGeometry("textures/users/testUser_1/imgs/composed.png", startAnimating);
 
     var splat1 = THREE.ImageUtils.loadTexture("textures/terrain/rock1.png");
     var splat2 = THREE.ImageUtils.loadTexture("textures/terrain/SUNNY-Assorted-Ground.png");
