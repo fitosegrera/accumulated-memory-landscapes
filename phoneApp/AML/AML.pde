@@ -1,14 +1,11 @@
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 import com.neurosky.thinkgear.*;
+import ketai.camera.*;
+
+KetaiCamera cam;
 
 BluetoothAdapter bluetoothAdapter;
 TGDevice tgDevice;
@@ -37,6 +34,10 @@ void setup() {
     tgDevice = new TGDevice(bluetoothAdapter, handler);
     btState = true;
   }
+  imageMode(CENTER);
+  cam = new KetaiCamera(this, 320, 240, 24);
+  cam.setPhotoSize(205, 205);
+  cam.start();
 }
 
 void draw() {
@@ -63,9 +64,20 @@ void draw() {
     text("Blink: " + blink, width/2, height - 50);
     graph(attention, meditation, blink);
     initState();
+    image(cam, width/2, height/2);
+    if(attention > 50){
+      fill(255);
+      textAlign(CENTER);
+      textSize(32);
+      text("Image Captured!!", width/2, height/2);
+    }
   } else {
     text("Bluetooth not available", width/2, height/2);
   }
+}
+
+void onCameraPreviewEvent() {
+  cam.read();
 }
 
 void initState() {
@@ -74,35 +86,35 @@ void initState() {
   textAlign(CENTER);
   textSize(22);
   fill(255);
-  
+
   if (connected == TGDevice.STATE_CONNECTED) {
     text("Connected.\n", posX, posY);
-  }
-  else if (connecting == TGDevice.STATE_CONNECTING) {
+  } else if (connecting == TGDevice.STATE_CONNECTING) {
     text("Connecting...\n", posX, posY);
-  }
-  else if (cantFind == TGDevice.STATE_NOT_FOUND) {
+  } else if (cantFind == TGDevice.STATE_NOT_FOUND) {
     text("Can't find\n", posX, posY);
-  }
-  else if (notPaired == TGDevice.STATE_NOT_PAIRED) {
+  } else if (notPaired == TGDevice.STATE_NOT_PAIRED) {
     text("not paired\n", posX, posY);
-  }
-  else if (disconnected == TGDevice.STATE_DISCONNECTED) {
+  } else if (disconnected == TGDevice.STATE_DISCONNECTED) {
     text("Disconnected mang\n", posX, posY);
   }
 }
 
 void graph(int a, int m, int b) {
   noFill();
-  float ma = map(a, 0, 100, 0, width - width/5);
-  float mm = map(m, 0, 100, 0, width - width/5);
-  float mb = map(b, 0, 100, 0, width - width/5); 
+  rectMode(CENTER);
+  float max = map(a, 0, 100, 320, width - width/5 + 80);
+  float may = map(a, 0, 100, 240, width - width/5);
+  float mmx = map(m, 0, 100, 320, width - width/5 + 80);
+  float mmy = map(m, 0, 100, 240, width - width/5);
+  float mbx = map(b, 0, 100, 320, width - width/5 + 80);
+  float mby = map(b, 0, 100, 240, width - width/5);
   stroke(ac);
-  ellipse(width/2, height/2, ma, ma);
+  rect(width/2, height/2, max, may);
   stroke(mc);
-  ellipse(width/2, height/2, mm, mm);
+  rect(width/2, height/2, mmx, mmy);
   stroke(bc);
-  ellipse(width/2, height/2, mb, mb);
+  rect(width/2, height/2, mbx, mby);
 }
 
 void onDestroy() {
