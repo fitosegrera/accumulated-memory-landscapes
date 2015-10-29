@@ -18,8 +18,26 @@ var cubeGeometry, cubeMaterial, cubeMesh, ms_Water;
 var postprocessing = {};
 var effectController = {};
 
+//GET USER DATA
+var qs = (function(a) {
+    if (a == "") return {};
+    var b = {};
+    for (var i = 0; i < a.length; ++i) {
+        var p = a[i].split('=', 2);
+        if (p.length == 1)
+            b[p[0]] = "";
+        else
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+    }
+    return b;
+})(window.location.search.substr(1).split('&'));
+
+var selectedUser = qs["id"];
+var incomeUserData = "../textures/users/" + selectedUser + "/imgs/composed.png";
+/////////////////
+
 initScene();
-initTerrain();
+initTerrain(incomeUserData);
 initSky("textures/sunnysky/");
 //initSky("textures/darkSky/");
 
@@ -58,7 +76,7 @@ function initScene() {
     document.body.appendChild(stats.domElement);
 
     //WATER
-    var waterNormals = new THREE.ImageUtils.loadTexture('textures/water/waternormals.jpg');
+    var waterNormals = new THREE.ImageUtils.loadTexture('../textures/water/waternormals.jpg');
     waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
 
     ms_Water = new THREE.Water(renderer, mainCamera, mainScene, {
@@ -79,11 +97,11 @@ function initScene() {
     );
     aMeshMirror.add(ms_Water);
     aMeshMirror.rotation.x = -Math.PI * 0.5;
-    aMeshMirror.position.y = 1;
+    aMeshMirror.position.y = 10;
     mainScene.add(aMeshMirror);
 
     //SOUND OBJECT
-    var windAudio = new Audio('audio/wind.ogg');
+    var windAudio = new Audio('../audio/wind.ogg');
     windAudio.addEventListener('ended', function() {
         this.currentTime = 0;
         this.play();
@@ -102,7 +120,7 @@ function initScene() {
 
     //INITIATE POSTPROCESSING
     initPostprocessing();
-    
+
 }
 
 //END OF INIT()
@@ -211,17 +229,17 @@ function initSky(sky_path) {
 
 //
 
-function initTerrain() {
+function initTerrain(userData) {
 
     terrainGeom = new THREE.TerrainGeometry();
-    terrainGeom.createGeometry("textures/users/testUser_1/imgs/composed.png", startAnimating);
+    terrainGeom.createGeometry(userData, startAnimating);
 
-    var splat1 = THREE.ImageUtils.loadTexture("textures/terrain/rock1.png");
-    var splat2 = THREE.ImageUtils.loadTexture("textures/terrain/SUNNY-Assorted-Ground.png");
-    var splat3 = THREE.ImageUtils.loadTexture("textures/terrain/grass-and-rock.png");
-    var splat4 = THREE.ImageUtils.loadTexture("textures/terrain/snow.png");
+    var splat1 = THREE.ImageUtils.loadTexture("../textures/terrain/rock1.png");
+    var splat2 = THREE.ImageUtils.loadTexture("../textures/terrain/SUNNY-Assorted-Ground.png");
+    var splat3 = THREE.ImageUtils.loadTexture("../textures/terrain/grass-and-rock.png");
+    var splat4 = THREE.ImageUtils.loadTexture("../textures/terrain/snow.png");
 
-    var alphaMap = THREE.ImageUtils.loadTexture("textures/terrain/splat2.png");
+    var alphaMap = THREE.ImageUtils.loadTexture("../textures/terrain/splat2.png");
 
     terrainUniforms.tAlphaMap.value = alphaMap;
     terrainUniforms.tSplat1.value = splat1;
@@ -281,7 +299,7 @@ function render() {
     ms_Water.render();
     renderer.render(skyScene, skyCamera);
     renderer.render(mainScene, mainCamera);
-    if(effectController.active){
+    if (effectController.active) {
         postprocessing.composer.render(0.1);
     }
 }

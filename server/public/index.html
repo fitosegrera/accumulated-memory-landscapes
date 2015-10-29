@@ -1,32 +1,112 @@
 <html>
 
 <head>
-    <title>Accumulated Memory Landscapes</title>
+    <title>Accumulated memory landscapes</title>
     <meta charset="utf-8">
     <meta name="author" content="fito_segrera">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="/socket.io/socket.io.js"></script>
+    <style type="text/css">
+    body {
+        background-size: 100% auto;
+        font-family: arial;
+    }
+    
+    img {
+        margin-top: 0%;
+        margin-left: 34%;
+    }
+    
+    #btn1 {
+        position: relative;
+        margin: auto;
+        margin-left: 44%;
+        margin-top: 0%;
+        width: 250px;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.2);
+        color: rgb(200, 200, 200);
+        font-size: 20px;
+        text-align: center;
+        border-style: solid;
+        border-width: 1px;
+        border-color: rgb(100, 100, 100);
+        padding-top: 15px;
+    }
+    
+    #btn2 {
+        position: relative;
+        margin: auto;
+        margin-left: 44%;
+        margin-top: 1%;
+        width: 250px;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.2);
+        color: rgb(200, 200, 200);
+        font-size: 20px;
+        text-align: center;
+        border-style: solid;
+        border-width: 1px;
+        border-color: rgb(100, 100, 100);
+        padding-top: 15px;
+    }
+    
+    p {
+        margin: auto;
+        margin-left: 35%;
+        margin-top: -3%;
+        width: 30%;
+        height: 60px;
+        color: rgb(0, 0, 0);
+        font-size: 14px;
+        text-align: justify;
+    }
+    
+    #select {
+        margin-top: 15%;
+        text-align: center;
+        font-size: 16px;
+    }
+    
+    a {
+        color: rgb(150, 150, 150);
+    }
+    </style>
 </head>
 
-<body style="margin: 0px; overflow: hidden;">
-    <script src="js/Three.js"></script>
-    <script src="js/stats.min.js"></script>
-    <script src="js/dat.gui.min.js"></script>
-    <script src="js/Detector.js"></script>
-    <script src="js/TerrainGeometry.js"></script>
-    <script src="js/TerrainControls.js"></script>
-    <script src="js/TerrainMaterial.js"></script>
+<body background="textures/background/bg.png" style="margin: 0px; overflow: hidden;">
+    <div id="container">
+        <img src="textures/background/title.png">
+        <p>Accumulated-Memory-Landscapes is Inspired by Jim Campbell's “Accumulated Psycho”, a piece which collects and interprets by averaging the monolith of cultural memory stored in Hitchcock's film “Psycho” as specific, precise data, transforming it, staging it in present experience; a transformation which devours memory, erasing its perceptual vividness by literally overwriting it with fuzzy averages - condensations of computational memory. Accumulated-Memory-Landscapes, as a conceptual process, explores how technology can mediate and enhance human memory as a process; expanding the possibilities of interaction, experiencing and sharing of these packages of information. This project, rethinks the 3 main steps involved in human memory (Encoding → Storage → Retrieval) by finding parallels between the biological human process and the technological devices and algorithms used for capturing, storing and recalling data. Using a custom-made electroencephalogram (EEG) with an embedded camera and internet access we have built a wearable device able to measure attention levels (proven to be responsible in many ways for memory capturing and retrieval) and alpha-waves patterns (used to measure visual cortex activity) of a user, in any given moment. The device records significant moments of the wearer, in the form of image sequences, which are sent in real-time to a server that algorithmically processes these. The result is an immersive 3D procedural landscape built from these memories; a space where the wearer and any other individual can experience and share (as in the model of a social network) these accumulated memories in more spacial ways.</p>
+        <p id="select">Select the user:</p>
+        <a id="btnLink1" onclick="emitData(this)" href="main.html">
+            <div id="btn1">User 1</div>
+        </a>
+        <a id="btnLink2" onclick="emitData(this)" href="main.html">
+            <div id="btn2">User 2</div>
+        </a>
+    </div>
+    <script type="text/javascript">
+    var socket = io.connect('http://localhost:3000');
+    socket.on('connect', function(data) {
+        console.log("connected!!");
+    });
 
-    <script src="js/shaders/water-material.js"></script>
-    <script src="js/shaders/TerrainShaders.js"></script>
-    <script src="js/shaders/dof/BokehShader.js"></script>
-    <script src="js/shaders/dof/CopyShader.js"></script>
-
-    <script src="js/postprocessing/BokehPass.js"></script>
-    <script src="js/postprocessing/EffectComposer.js"></script>
-    <script src="js/postprocessing/RenderPass.js"></script>
-    <script src="js/postprocessing/MaskPass.js"></script>
-    <script src="js/postprocessing/ShaderPass.js"></script>
-    <script src="main.js"></script>
+    function emitData(id) {
+        if (id.id == 'btnLink1') {
+            id.href = "main.html?id=testUser_1";
+            socket.emit('id', {
+                user: 'testUser_1'
+            });
+        }
+        if (id.id == 'btnLink2') {
+            id.href = "main.html?id=testUser_2";
+            socket.emit('id', {
+                user: 'testUser_2'
+            });
+        }
+    }
+    </script>
 </body>
 
 </html>

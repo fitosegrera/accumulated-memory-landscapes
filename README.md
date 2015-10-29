@@ -21,11 +21,13 @@ Accumulated-Memory-Landscapes is Inspired by Jim Campbell's “Accumulated Psych
   c) Google-Chrome or Firefox
 
 
-2. Processing 3.0 and processing-android mode [PROCESSING](https://processing.org/) Please foolow intructions to install Android Developer Tools at [Android Mode](https://github.com/processing/processing-android/wiki)
+2. Processing 3.0 [PROCESSING](https://processing.org/) and processing-android mode. Please follow intructions to install Android Developer Tools at [Android Mode](https://github.com/processing/processing-android/wiki)
 
-3. Android Phone with Developer Tools enabled. The activation of these tools varies from phone o phone.
+3. Ketai library for processing [DOWNLOAD](http://ketai.org/)
 
-4. Bluetooth EEG (I'm using Neurosky's Mindwave Mobile for the first prototype). Any thinkgear enabled EEG system should work fine with this project, as long as it is compatible with the thinkgear socket protocol.
+4. Android Phone with Developer Tools enabled. The activation of these tools varies from phone o phone.
+
+5. Bluetooth EEG (I'm using Neurosky's Mindwave Mobile for the first prototype). Any thinkgear enabled EEG system should work fine with this project, as long as it is compatible with the thinkgear socket protocol.
 
 ###Installation
 

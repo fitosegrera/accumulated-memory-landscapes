@@ -2,7 +2,9 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Handler;
 import android.os.Message;
+import java.net.HttpURLConnection;
 import com.neurosky.thinkgear.*;
+
 import ketai.camera.*;
 
 KetaiCamera cam;
@@ -23,6 +25,9 @@ String title1 = "Accumulated Memory";
 String title2 = "Landscapes";
 PFont f;
 
+int isAttentionHigh = 0;
+int pic;
+
 void setup() {
   f = loadFont("Ubuntu-48.vlw");
   fill(200);
@@ -34,9 +39,11 @@ void setup() {
     tgDevice = new TGDevice(bluetoothAdapter, handler);
     btState = true;
   }
+  pic = 0;
   imageMode(CENTER);
   cam = new KetaiCamera(this, 320, 240, 24);
-  cam.setPhotoSize(205, 205);
+  //cam.setSaveDirectory("/aml/");
+  //cam.setPhotoSize(205, 205);
   cam.start();
 }
 
@@ -65,11 +72,18 @@ void draw() {
     graph(attention, meditation, blink);
     initState();
     image(cam, width/2, height/2);
-    if(attention > 50){
+    if (attention > 50) {
       fill(255);
       textAlign(CENTER);
       textSize(32);
       text("Image Captured!!", width/2, height/2);
+      if (isAttentionHigh == 0) {
+        cam.savePhoto("aml"+str(pic)+".png");
+        pic++;
+      }
+      isAttentionHigh++;
+    } else {
+      isAttentionHigh = 0;
     }
   } else {
     text("Bluetooth not available", width/2, height/2);
