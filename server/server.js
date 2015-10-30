@@ -43,24 +43,27 @@ io.on('connection', function(socket) {
 //Merge each new saved image int he server's folder with composed.png
 
 function merge(data) {
-    fs.exists('public/textures/users/'+ data.user +'/imgs/composed.png', function(exists) {
+    var ts = "testUser_1";
+    fs.exists('./public/textures/users/' + ts + '/imgs/composed.png', function(exists) {
         if (!exists) {
-            exec("convert -size 2048x2048 xc:white public/textures/users/"+ data.user +"/imgs/composed.png", function(err, stdout, stderr) {
+            exec("convert -size 2048x2048 xc:white ./public/textures/users/" + ts + "/imgs/composed.png", function(err, stdout, stderr) {
                 if (err) {
                     console.log(err);
                 }
             });
         }
-        fs.watch('public/textures/users/'+ data.user +'/imgs', function(event, filename) {
+        fs.watch('public/textures/users/' + ts + '/imgs', function(event, filename) {
             // console.log(filename);
             if (event == 'rename' && filename != 'composed.png') {
                 console.log(filename);
-                var command = "convert -resize 2048x2048 public/textures/users/"+ data.user +"/imgs/" + filename + " public/textures/users/"+ data.user +"/imgs/composed.png -compose multiply -composite -contrast-stretch 0.1% -colorspace Gray public/textures/users/"+ data.user +"/imgs/composed.png";
-                exec(command, function(err, stdout, stderr) {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
+                var command = "convert -resize 2048x2048 ./public/textures/users/" + ts + "/imgs/" + filename + " ./public/textures/users/" + ts + "/imgs/composed.png -compose multiply -composite -contrast-stretch 0.1% -colorspace Gray ./public/textures/users/" + ts + "/imgs/composed.png";
+                setTimeout(function() {
+                    exec(command, function(err, stdout, stderr) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                },3000);
             }
         });
     });

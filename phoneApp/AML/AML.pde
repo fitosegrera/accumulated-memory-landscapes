@@ -72,13 +72,13 @@ void draw() {
     graph(attention, meditation, blink);
     initState();
     image(cam, width/2, height/2);
-    if (attention > 50) {
+    if (attention > 80 ) {
       fill(255);
       textAlign(CENTER);
       textSize(32);
       text("Image Captured!!", width/2, height/2);
       if (isAttentionHigh == 0) {
-        cam.savePhoto("aml"+str(pic)+".png");
+        cam.savePhoto("aml"+str(pic)+".jpg");
         pic++;
       }
       isAttentionHigh++;
