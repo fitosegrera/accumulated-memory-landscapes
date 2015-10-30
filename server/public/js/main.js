@@ -33,24 +33,30 @@ var qs = (function(a) {
 })(window.location.search.substr(1).split('&'));
 
 var selectedUser = qs["id"];
+var waterLevel = qs["water"];
+var fogLevel = qs["fog"];
 var incomeUserData = "../textures/users/" + selectedUser + "/imgs/composed.png";
+
 /////////////////
 
-initScene();
+initScene(waterLevel, fogLevel);
 initTerrain(incomeUserData);
 initSky("textures/sunnysky/");
 //initSky("textures/darkSky/");
 
 //START OF INIT()
-function initScene() {
+function initScene(wl, fl) {
 
     mainScene = new THREE.Scene();
     mainCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, .1, 20000);
 
     // FOG --> 0xDFF8FD matches the skybox at the horizon
     //mainScene.fog = new THREE.Fog( 0xDFF8FD, 1.0, 1000.0 );
-    mainScene.fog = new THREE.FogExp2(0xDFF8FD, 0.001);
-
+    if(fl == undefined){
+        mainScene.fog = new THREE.FogExp2(0xDFF8FD, 0.001);
+    }else{
+        mainScene.fog = new THREE.FogExp2(0xDFF8FD, fl);
+    }
     //LIGHTS
     var ambientLight = new THREE.AmbientLight(0x111111);
     var sunLight = new THREE.DirectionalLight(0xffffff, 1.0);
@@ -97,7 +103,11 @@ function initScene() {
     );
     aMeshMirror.add(ms_Water);
     aMeshMirror.rotation.x = -Math.PI * 0.5;
-    aMeshMirror.position.y = 10;
+    if(wl == undefined){
+        aMeshMirror.position.y == 10;
+    }else{
+        aMeshMirror.position.y = wl;
+    }    
     mainScene.add(aMeshMirror);
 
     //SOUND OBJECT
